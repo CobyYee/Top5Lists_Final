@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import AuthContext from '../auth'
-import Copyright from './Copyright'
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -23,12 +22,12 @@ export default function LoginScreen() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const formData = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    auth.loginUser({
+        email: formData.get('email'),
+        password: formData.get('password')
+    }, store);
   };
 
   return (

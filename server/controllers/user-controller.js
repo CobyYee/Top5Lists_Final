@@ -3,17 +3,55 @@ const User = require('../models/user-model')
 const bcrypt = require('bcryptjs')
 
 getLoggedIn = async (req, res) => {
-    auth.verify(req, res, async function () {
-        const loggedInUser = await User.findOne({ _id: req.userId });
-        return res.status(200).json({
-            loggedIn: true,
+    try {
+        auth.verify(req, res, async function () {
+            const loggedInUser = await User.findOne({ _id: req.userId });
+            return res.status(200).json({
+                loggedIn: true,
+                user: {
+                    firstName: loggedInUser.firstName,
+                    lastName: loggedInUser.lastName,
+                    email: loggedInUser.email
+                }
+            }).send();
+        })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send();
+    }
+}
+
+loginUser = async (req, res) => {
+    try {
+        const { email, password } = req.body;
+        if(!email || !password) {
+            return res.status(401).json({errorMessage: "Please enter both a username and password."});
+        }
+        const existingUser = await User.findOne({email: email});
+        if(!existingUser) {
+            return res.status(402).json({errorMessage: "There is no account associated with this email."});
+        }
+        if(!bcrypt.compare(password, existingUser.passwordHash)) {
+            return res.status(403).json({errorMessage: "An incorrect password has been entered."});
+        }
+
+        const token = auth.signToken(existingUser);
+        await res.cookie("token", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "none"
+        }).status(200).json({
+            success: true,
             user: {
-                firstName: loggedInUser.firstName,
-                lastName: loggedInUser.lastName,
-                email: loggedInUser.email
+                firstName: existingUser.firstName,
+                lastName: existingUser.lastName,
+                email: existingUser.email
             }
         }).send();
-    })
+    } catch (err) {
+        console.log(err);
+        res.status(500).send;
+    }
 }
 
 registerUser = async (req, res) => {
@@ -80,5 +118,6 @@ registerUser = async (req, res) => {
 
 module.exports = {
     getLoggedIn,
-    registerUser
+    registerUser,
+    loginUser
 }
