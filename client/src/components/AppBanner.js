@@ -73,11 +73,36 @@ export default function AppBanner() {
 
     let editToolbar = "";
     let menu = loggedOutMenu;
+    /*
+    let userIcon = <IconButton
+                        size="large"
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
+                    >
+                        { getAccountMenu(auth.loggedIn) }
+                    </IconButton>;
+    */
     if (auth.loggedIn) {
         menu = loggedInMenu;
         if (store.currentList) {
             editToolbar = <EditToolbar />;
         }
+        /*
+        let initials = 
+        userIcon = <Typography
+                        variant = "h4"
+                        nowrap
+                        component="div"
+                        sx={{display: {xs: 'none', sm: 'block'} }}
+                        onClick={handleProfileMenuOpen}
+                    >
+                        APDLASPDL
+                    </Typography>;
+        */
     }
     
     function getAccountMenu(loggedIn) {
@@ -98,17 +123,17 @@ export default function AppBanner() {
                     </Typography>
                     <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
                     <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        <IconButton
-                            size="large"
-                            edge="end"
-                            aria-label="account of current user"
-                            aria-controls={menuId}
-                            aria-haspopup="true"
-                            onClick={handleProfileMenuOpen}
-                            color="inherit"
-                        >
-                            { getAccountMenu(auth.loggedIn) }
-                        </IconButton>
+                    <IconButton
+                        size="large"
+                        edge="end"
+                        aria-label="account of current user"
+                        aria-controls={menuId}
+                        aria-haspopup="true"
+                        onClick={handleProfileMenuOpen}
+                        color="inherit"
+                    >
+                        { getAccountMenu(auth.loggedIn) }
+                    </IconButton>
                     </Box>
                 </Toolbar>
             </AppBar>
