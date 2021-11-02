@@ -100,7 +100,7 @@ export default function AppBanner() {
                         {initials}
                     </Typography>;
     }
-    
+
     function getAccountMenu(loggedIn) {
         return <AccountCircle />;
     }

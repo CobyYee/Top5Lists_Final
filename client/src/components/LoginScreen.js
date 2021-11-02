@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import { GlobalStoreContext } from '../store';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-
+import Modal from './Modal';
 
 export default function LoginScreen() {
   const { auth } = useContext(AuthContext);
@@ -33,6 +33,7 @@ export default function LoginScreen() {
   return (
       <Grid container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
+        <Modal />
         <Grid
           item
           xs={false}
