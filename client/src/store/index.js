@@ -210,21 +210,25 @@ function GlobalStoreContextProvider(props) {
             items: ["?", "?", "?", "?", "?"],
             ownerEmail: auth.user.email
         };
-        const response = await api.createTop5List(payload);
-        if (response.data.success) {
-            tps.clearAllTransactions();
-            let newList = response.data.top5List;
-            storeReducer({
-                type: GlobalStoreActionType.CREATE_NEW_LIST,
-                payload: newList
+        try {
+            const response = await api.createTop5List(payload);
+            if (response.data.success) {
+                tps.clearAllTransactions();
+                let newList = response.data.top5List;
+                storeReducer({
+                    type: GlobalStoreActionType.CREATE_NEW_LIST,
+                    payload: newList
+                }
+                );
+    
+                // IF IT'S A VALID LIST THEN LET'S START EDITING IT
+                history.push("/top5list/" + newList._id);
             }
-            );
-
-            // IF IT'S A VALID LIST THEN LET'S START EDITING IT
-            history.push("/top5list/" + newList._id);
-        }
-        else {
-            console.log("API FAILED TO CREATE A NEW LIST");
+            else {
+                console.log("API FAILED TO CREATE A NEW LIST");
+            }
+        } catch (err) {
+            console.log(err);
         }
     }
 

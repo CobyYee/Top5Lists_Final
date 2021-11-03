@@ -12,7 +12,7 @@ createTop5List = (req, res) => {
     const top5List = new Top5List(body);
     console.log("creating top5List: " + JSON.stringify(top5List));
     if (!top5List) {
-        return res.status(400).json({ success: false, error: err })
+        return res.status(401).json({ success: false, error: err })
     }
 
     top5List
@@ -25,7 +25,7 @@ createTop5List = (req, res) => {
             })
         })
         .catch(error => {
-            return res.status(400).json({
+            return res.status(402).json({
                 error,
                 message: 'Top 5 List Not Created!'
             })

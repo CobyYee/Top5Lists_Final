@@ -31,7 +31,8 @@ loginUser = async (req, res) => {
         if(!existingUser) {
             return res.status(402).json({errorMessage: "There is no account associated with this email."});
         }
-        if(!bcrypt.compare(password, existingUser.passwordHash)) {
+        const rightPassword = await bcrypt.compare(password, existingUser.passwordHash);
+        if(!rightPassword) {
             return res.status(403).json({errorMessage: "An incorrect password has been entered."});
         }
 
@@ -73,7 +74,7 @@ registerUser = async (req, res) => {
         if (!firstName || !lastName || !email || !password || !passwordVerify) {
             return res
                 .status(400)
-                .json({ errorMessage: "Please enter all required fields." });
+                .json({ errorMessage: "Please enter all the required fields." });
         }
         if (password.length < 8) {
             return res
