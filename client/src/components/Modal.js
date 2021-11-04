@@ -29,7 +29,7 @@ export default function BasicModal() {
   }
 
   const cancelDeletion = () => {
-      store.unmarkListMarkedForDeletion();
+      store.unmarkListForDeletion();
   }
 
   const handleDeletion = () => {
