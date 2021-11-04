@@ -5,6 +5,7 @@ import Modal from '@mui/material/Modal';
 import AuthContext from '../auth';
 import { useContext, useState } from 'react';
 import Alert from '@mui/material/Alert';
+import GlobalStoreContext from '../store';
 
 const style = {
   position: 'absolute',
@@ -19,17 +20,26 @@ const style = {
 };
 
 export default function BasicModal() {
+  const { store } = useContext(GlobalStoreContext);
   const { auth } = useContext(AuthContext);
-  const [open, setOpen] = useState(true);
-  const handleClose = () => setOpen(false);
+  let open = false;
 
   const hideError = () => {
       auth.hideError();
   }
 
+  const cancelDeletion = () => {
+      store.unmarkListMarkedForDeletion();
+  }
+
+  const handleDeletion = () => {
+      store.deleteMarkedList();
+  }
+
   let component = "";
 
   if(auth.err) {
+    open = true;
     component = <div>
                     <Modal
                         open={open}
@@ -40,6 +50,23 @@ export default function BasicModal() {
                         <Box sx={style}>
                             <Alert severity = "error">{auth.err}</Alert>
                             <Button variant = "text" onClick = {hideError}> Okay! </Button>
+                        </Box>
+                    </Modal>
+                </div>
+  }
+  if(store.listMarkedForDeletion) {
+    open=true;
+    component = <div>
+                    <Modal
+                        open={open}
+                        onClose={cancelDeletion}
+                        aria-labelledby="modal-modal-title"
+                        aria-describedby="modal-modal-description"
+                    >
+                        <Box sx={style}>
+                            <Alert severity = "error"> Are you sure you want to delete the Top 5{store.listMarkedForDeletion.name}?</Alert>
+                            <Button variant = "text" onClick = {handleDeletion}> Confirm </Button>
+                            <Button variant = "text" onClick = {cancelDeletion}> Cancel </Button>
                         </Box>
                     </Modal>
                 </div>
