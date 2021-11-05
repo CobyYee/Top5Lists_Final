@@ -31,7 +31,8 @@ loginUser = async (req, res) => {
         if(!existingUser) {
             return res.status(402).json({errorMessage: "There is no account associated with this email."});
         }
-        if(!bcrypt.compare(password, existingUser.passwordHash)) {
+        let passwordCompare = await bcrypt.compare(password, existingUser.passwordHash);
+        if(!passwordCompare) {
             return res.status(403).json({errorMessage: "An incorrect password has been entered."});
         }
 
