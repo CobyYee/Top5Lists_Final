@@ -49,7 +49,7 @@ export default function BasicModal() {
                     >
                         <Box sx={style}>
                             <Alert severity = "error">{auth.err}</Alert>
-                            <Button variant = "text" onClick = {hideError}> Okay! </Button>
+                            <Button variant = "outlined" onClick = {hideError}> Okay! </Button>
                         </Box>
                     </Modal>
                 </div>
@@ -64,9 +64,9 @@ export default function BasicModal() {
                         aria-describedby="modal-modal-description"
                     >
                         <Box sx={style}>
-                            <Alert severity = "error"> Are you sure you want to delete the Top 5{store.listMarkedForDeletion.name}?</Alert>
-                            <Button variant = "text" onClick = {handleDeletion}> Confirm </Button>
-                            <Button variant = "text" onClick = {cancelDeletion}> Cancel </Button>
+                            <Alert severity = "error"> Are you sure you want to delete the Top 5 {store.listMarkedForDeletion.name}?</Alert>
+                            <Button variant = "outlined" onClick = {handleDeletion}> Confirm </Button>
+                            <Button variant = "outlined" onClick = {cancelDeletion}> Cancel </Button>
                         </Box>
                     </Modal>
                 </div>

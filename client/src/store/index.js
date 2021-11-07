@@ -58,7 +58,7 @@ function GlobalStoreContextProvider(props) {
             case GlobalStoreActionType.CHANGE_LIST_NAME: {
                 return setStore({
                     idNamePairs: payload.idNamePairs,
-                    currentList: payload.top5List,
+                    currentList: null,
                     newListCounter: store.newListCounter,
                     isListNameEditActive: false,
                     isItemEditActive: false,
@@ -164,31 +164,37 @@ function GlobalStoreContextProvider(props) {
 
     // THIS FUNCTION PROCESSES CHANGING A LIST NAME
     store.changeListName = async function (id, newName) {
-        let response = await api.getTop5ListById(id);
-        if (response.data.success) {
-            let top5List = response.data.top5List;
-            top5List.name = newName;
-            async function updateList(top5List) {
-                response = await api.updateTop5ListById(top5List._id, top5List);
-                if (response.data.success) {
-                    async function getListPairs(top5List) {
-                        response = await api.getTop5ListPairs();
+        try {
+            let response = await api.getTop5ListById(id);
+            if (response.data.success) {
+                let top5List = response.data.top5List;
+                if(auth.user !== null && auth.user.email === top5List.ownerEmail) {
+                    top5List.name = newName;
+                    async function updateList(top5List) {
+                        response = await api.updateTop5ListById(top5List._id, top5List);
                         if (response.data.success) {
-                            let pairsArray = response.data.idNamePairs;
-                            pairsArray = await store.filterPairs(pairsArray);
-                            storeReducer({
-                                type: GlobalStoreActionType.CHANGE_LIST_NAME,
-                                payload: {
-                                    idNamePairs: pairsArray,
-                                    top5List: top5List
+                            async function getListPairs(top5List) {
+                                response = await api.getTop5ListPairs();
+                                if (response.data.success) {
+                                    let pairsArray = response.data.idNamePairs;
+                                    pairsArray = await store.filterPairs(pairsArray);
+                                    storeReducer({
+                                        type: GlobalStoreActionType.CHANGE_LIST_NAME,
+                                        payload: {
+                                            idNamePairs: pairsArray,
+                                            top5List: top5List
+                                        }
+                                    });
                                 }
-                            });
+                            }
+                            getListPairs(top5List);
                         }
                     }
-                    getListPairs(top5List);
+                    updateList(top5List);
                 }
             }
-            updateList(top5List);
+        } catch (err) {
+            console.log(err);
         }
     }
 
@@ -277,10 +283,12 @@ function GlobalStoreContextProvider(props) {
     }
 
     store.deleteList = async function (listToDelete) {
-        let response = await api.deleteTop5ListById(listToDelete._id);
-        if (response.data.success) {
-            store.loadIdNamePairs();
-            history.push("/");
+        if(auth.user !== null && auth.user.email === listToDelete.ownerEmail) {
+            let response = await api.deleteTop5ListById(listToDelete._id);
+            if (response.data.success) {
+                store.loadIdNamePairs();
+                history.push("/");
+            }
         }
     }
 
