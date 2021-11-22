@@ -17,7 +17,7 @@ function Statusbar() {
         text = store.currentList.name;
     }
     let component = "";
-    if(location.pathname !== "/") {
+    if(location.pathname === "/lists/") {
         component = <div id="top5-statusbar">
                         <Typography variant="h4">{text}</Typography>
                     </div>

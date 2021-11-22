@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useLocation } from 'react-router-dom';
+
 
 export default function AppBanner() {
     const { auth } = useContext(AuthContext);
@@ -100,32 +102,37 @@ export default function AppBanner() {
                         {initials}
                     </Typography>;
     }
+    let component = "";
+    const location = useLocation();
+    if(location.pathname !== "/") {
+        component = <Box sx={{ flexGrow: 1 }}>
+                        <AppBar position="static">
+                            <Toolbar>
+                                <Typography                        
+                                    variant="h4"
+                                    noWrap
+                                    component="div"
+                                    sx={{ display: { xs: 'none', sm: 'block' } }}                        
+                                >
+                                    <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>T<sup>5</sup>L</Link>
+                                </Typography>
+                                <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
+                                <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+                                    {userIcon}
+                                </Box>
+                            </Toolbar>
+                        </AppBar>
+                        {
+                            menu
+                        }
+                    </Box>
+    }
 
     function getAccountMenu(loggedIn) {
         return <AccountCircle />;
     }
 
     return (
-        <Box sx={{ flexGrow: 1 }}>
-            <AppBar position="static">
-                <Toolbar>
-                    <Typography                        
-                        variant="h4"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}                        
-                    >
-                        <Link style={{ textDecoration: 'none', color: 'white' }} to='/'>T<sup>5</sup>L</Link>
-                    </Typography>
-                    <Box sx={{ flexGrow: 1 }}>{editToolbar}</Box>
-                    <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                        {userIcon}
-                    </Box>
-                </Toolbar>
-            </AppBar>
-            {
-                menu
-            }
-        </Box>
+        component
     );
 }
