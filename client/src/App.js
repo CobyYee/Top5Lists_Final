@@ -36,7 +36,6 @@ const App = () => {
                         <Route path="/login/" exact component={LoginScreen} />
                         <Route path="/lists/" exact component={HomeWrapper} />
                     </Switch>
-                    <Statusbar />
                 </GlobalStoreContextProvider>
             </AuthContextProvider>
         </BrowserRouter>

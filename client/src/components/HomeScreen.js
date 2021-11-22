@@ -5,6 +5,8 @@ import { Fab, Typography } from '@mui/material'
 import AddIcon from '@mui/icons-material/Add';
 import List from '@mui/material/List';
 import Modal from './Modal';
+import Statusbar from './Statusbar';
+import { WorkspaceScreen } from '.';
 /*
     This React component lists all the top5 lists in the UI.
     
@@ -17,9 +19,6 @@ const HomeScreen = () => {
         store.loadIdNamePairs();
     }, []);
 
-    function handleCreateNewList() {
-        store.createNewList();
-    }
     let listCard = "";
     if (store) {
         listCard = 
@@ -35,25 +34,24 @@ const HomeScreen = () => {
             }
             </List>;
     }
+    let component = "";
+    if(store.currentList !== null) {
+        component = <WorkspaceScreen/>
+    }
+    else {
+        component = <div id="list-selector-list">
+                        {
+                            listCard
+                        }
+                        <Modal/>
+                    </div>
+    }
     return (
-        <div id="top5-list-selector">
-            <div id="list-selector-heading">
-            <Fab 
-                color="primary" 
-                aria-label="add"
-                id="add-list-button"
-                onClick={handleCreateNewList}
-            >
-                <AddIcon />
-            </Fab>
-                <Typography variant="h2">Your Lists</Typography>
+        <div>
+            <div id="top5-list-selector">
+                {component}
             </div>
-            <div id="list-selector-list">
-                {
-                    listCard
-                }
-                <Modal/>
-            </div>
+            <Statusbar/>
         </div>)
 }
 

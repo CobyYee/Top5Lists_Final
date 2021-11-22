@@ -2,7 +2,6 @@ import { useContext, useState } from 'react';
 import { Link } from 'react-router-dom'
 import AuthContext from '../auth';
 import { GlobalStoreContext } from '../store'
-import EditToolbar from './EditToolbar'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -88,9 +87,6 @@ export default function AppBanner() {
                     </IconButton>;
     if (auth.loggedIn) {
         menu = loggedInMenu;
-        if (store.currentList) {
-            editToolbar = <EditToolbar />;
-        }
         let initials = auth.user.firstName[0] + auth.user.lastName[0];
         userIcon = <Typography
                         variant = "h4"
