@@ -54,7 +54,7 @@ body {
   border-radius: 10px;
 }
 #splash-screen {
-  background-image: linear-gradient(to bottom, #b8b808, #636723);
+  background:linear-gradient(to top, #33ccff 0%, #ffccff 100%);
   color: white;
   font-size: 5vw;
   border-color: black;
@@ -68,7 +68,16 @@ body {
   text-align: center;
   vertical-align: center;
 }
-
+#title {
+  color: black;
+  font-size: 58pt;
+  text-align: center;
+}
+#description {
+  color: grey;
+  font-size: 24pt;
+  text-align: center;
+}
 #edit-toolbar {
   background-color: transparent;
   float: right;
