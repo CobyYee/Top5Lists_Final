@@ -26,11 +26,14 @@ function WorkspaceScreen() {
         setListName(event.target.value);
     }
 
-    let editItems = "";
-    if (store.currentList) {
-        editItems = 
+    return (
+        <div id="top5-workspace">
+            <TextField defaultValue = {store.currentList.name} id = "list-name" size = "small" sx = {{width: '300px', left: '10px'}}
+                onChange = {handleUpdate}/>
+            <div id="workspace-edit">
+                
             <Container id = "item-container">
-                <Grid container spacing={1} border = "1px" rowSpacing = {4}>
+                <Grid container spacing={1} border = "1px" rowSpacing = {3}>
                     <Grid container item spacing={2} sx = {{border: '1px'}}>
                         <Grid item xs = {0.75}> 
                             <div id = "item-number"> 1 </div>
@@ -88,13 +91,6 @@ function WorkspaceScreen() {
                     </Grid>
                 </Grid>
             </Container>
-    }
-    return (
-        <div id="top5-workspace">
-            <TextField defaultValue = {store.currentList.name} id = "list-name" size = "small" sx = {{width: '300px', left: '10px'}}
-                onChange = {handleUpdate}/>
-            <div id="workspace-edit">
-                {editItems}
             </div>
             <div id = "workspaceButtons">
                 <Button variant = "contained" onClick = {saveList}> Save </Button>

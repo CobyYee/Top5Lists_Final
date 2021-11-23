@@ -101,7 +101,7 @@ export default function AppBanner() {
     let component = "";
     const location = useLocation();
     if(location.pathname !== "/") {
-        component = <Box sx={{ flexGrow: 1 }}>
+        component = <Box sx={{ flexGrow: 1}}>
                         <AppBar position="static">
                             <Toolbar>
                                 <Typography                        

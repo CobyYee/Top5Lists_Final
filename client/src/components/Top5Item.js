@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import ListItem from '@mui/material/ListItem';
 import IconButton from '@mui/material/IconButton';
 import EditIcon from '@mui/icons-material/Edit';
+import { borderRadius } from "@mui/system";
 /*
     This React component represents a single item in our
     Top 5 List, which can be edited or moved around.
@@ -65,10 +66,11 @@ function Top5Item(props) {
             onKeyPress={handleKeyPress}
             onChange={handleUpdateText}
             defaultValue={props.text}
-            inputProps={{style: {fontSize: "16pt", color: "black", background: "#DEF581"}}}
+            inputProps={{style: {fontSize: "24pt", color: "black", background: "#DEF581", height: "22px", left: "2%"}}}
             style = {{
                 height: "60px",
-                color: "yellow"
+                color: "yellow",
+                width: "113.7%"
             }}
             autoFocus
         />
