@@ -22,7 +22,7 @@ const HomeScreen = () => {
     let listCard = "";
     if (store) {
         listCard = 
-            <List sx={{ width: '96%', left: '2%', bgcolor: '#81CAF5' }}>
+            <List sx={{ width: '96%', left: '2%', bgcolor: '#81CAF5'}}>
             {
                 store.idNamePairs.map((pair) => (
                     <ListCard
@@ -36,6 +36,7 @@ const HomeScreen = () => {
     }
     let component = "";
     if(store.currentList !== null) {
+        console.log("ABC");
         component = <WorkspaceScreen/>
     }
     else {

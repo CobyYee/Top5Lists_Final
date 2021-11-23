@@ -218,9 +218,6 @@ function GlobalStoreContextProvider(props) {
                     payload: newList
                 }
                 );
-    
-                // IF IT'S A VALID LIST THEN LET'S START EDITING IT
-                history.push("/top5list/" + newList._id);
             }
             else {
                 console.log("API FAILED TO CREATE A NEW LIST");
